@@ -1,0 +1,19 @@
+{
+    "extends": "@tsconfig/react-native/tsconfig.json",
+    "compilerOptions": {
+      "allowJs": true,
+      "jsx": "react-native",
+      "noEmit": true,
+      "skipLibCheck": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "strict": true,
+      "noImplicitAny": false,
+      "moduleResolution": "node",
+      "baseUrl": "./",
+      "paths": {
+        "./src/*": ["./src/*"],
+        "./src/View/*": ["./src/View/*"],
+      }
+    },
+}
