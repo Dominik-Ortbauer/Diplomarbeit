@@ -41,8 +41,33 @@ export default class SocketClient {
         this.port = port;
     }
 
-    public sendProcessingData(data: CameraCapturedPicture[]) {
-        this.ws.send(`{"type": "processing", "data": ${JSON.stringify(data)}}`);
+    public async sendProcessingData(data: CameraCapturedPicture[]) {
+        const reader = new FileReader();
+
+        var json = `{"type": "processing", "data":[`;
+
+        reader.onloadend = () => {
+            json += "\"" + reader.result.toString().split(";")[1].substring(7) + "\",";
+            console.log("loaded");
+        }
+
+        console.log(data);
+        for(const picture of data) {
+            const response = await fetch(picture.uri);
+            const blob = await response.blob();
+            reader.readAsDataURL(blob);
+            console.log("read");
+        }
+
+        reader.addEventListener("loadend", () => {
+            json = json.substring(0, json.length - 1);
+            json += "]}";
+            console.log(json.substring(0, 100));
+            if(this.ws.readyState == WebSocket.OPEN) {
+                
+                this.ws.send(json);
+            }
+        });
     }
 
     sendValidatedData(validationData: Map<string, string>) {
