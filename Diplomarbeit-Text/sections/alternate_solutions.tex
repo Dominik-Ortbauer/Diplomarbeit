@@ -1,0 +1,78 @@
+\section{Robotic Process Automation}
+\setauthor{Dominik Ortbauer}
+
+When looking at the problem of this project, the first thought for solving it is to use some sort of Robotic Process Automation like UiPath or Power Automate.
+
+RPA uses software robots to automate tedious and menial digital tasks. This is done by programming these robots to do the exact same things a human would do such as moving the mouse and typing data into textboxes using the keyboard. 
+
+Said robots are especially useful when automating tasks that require moving data between different applications. The other option, creating an interface, would be a lot more work or simply not possible if you can not alter the code for both applications.
+
+It is important to understand the limits of Robotic Process Automation. While it excels at rule based decisions and repetitive tasks it struggles with complex decisions and changing environments.
+AI can help with some of these problems but can not remove these restrictions entirely.
+
+RPA is never the best way to solve a problem and always just a transitional solution. However, it is way cheaper than the alternatives as well as faster to develop and therefore it is widely used.
+
+Digital robots can do the same job faster, more efficient and more reliable than humans and they are also easily scalable. They can also employ techniques which humans can not do such as accessing a REST API or talking to programs directly without the user interface.
+
+\cite{RPAFundamentals}
+
+One way to create a RPA solution is to use UiPath.
+
+\subsection{UiPath}
+\setauthor{Dominik Ortbauer}
+
+UiPath consists of three major components: UiPath Studio which is used by the developers to program the robots, the robots which execute the workflows developed in said Studio and the Orchestrator as a central hub where the code gets published to and jobs are assigned to robots.
+
+\subsubsection{UiPath Studio}
+Developers use UiPath Studio to write the instructions for the robots. For example, when a workflow needs to log into a web app the developer uses two "type into" commands to type in the username and password and one "click" to click the submit button. 
+
+UiPath Studio also offers more advanced features like Computer Vision, Data Scraping and Document Understanding.
+
+\subsubsection{UiPath Robot}
+A robot interacts with the software and performs all the tasks as described in the workflow created in UiPath Studio.
+
+There is a differentiation between tasks that interact with a user interface (attended automation) and tasks that can be performed without using any UI (unattended automation). 
+Unattended processes are used for automating back office jobs and more scalable than their counterparts used for front office jobs.
+
+\subsubsection{UiPath Orchestrator}
+The Orchestrator is the web application where it all comes together. The workflows created in UiPath Studio get published to here and jobs can be scheduled or run immediately from this web app.
+
+It also allows for the administration of assets used to store data that can be accessed by the robots as well as queues allowing for a convenient scalable producer - consumer pattern implementation. Another feature of the Orchestrator is the user management which includes licence allocation.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{pics/UiPathArchitecture.png}
+    \caption{Studio, Robot and Orchestrator Architecture}
+    \label{fig:as:UiPathArchitecture}
+\end{figure}
+
+\cite{UiPathOverview}
+\cite{UiPathAcademyOverview}
+
+Due to budgeting reasons UiPath was not used for this project seeing as it requires a licence for commercial use. Aside from than that, it would be a good solution for this kind of problem due to UiPaths Document Understanding capabilities and the automation features required for inserting the data into the database.
+
+\subsection{Power Automate}
+\setauthor{Dominik Ortbauer}
+
+Power Automate is a digital automation tool developed by Microsoft and formerly known as Microsoft Flow. Workflows are created in the web and then scheduled or triggered to run. Examples for this include running a workflow on the first of every month which backs up a server and using a trigger to run one every time an email is received and then classifying it according to the emails subject.
+
+Power Automate offers connectors for all Microsoft 365 apps and countless more which enables you to connect them. You can for example receive an email and then upload it to SharePoint in order to archive it. If no connectors fit your need it also offers the possibility to create your own.
+
+The tool is aimed at people with no coding experience and therefore is very simple to use. There is a predefined set of actions that can be used to do almost everything. This includes conditions, loops and other logic as well as the communication with apps like SharePoint, Outlook, GMail, Dropbox and many more. Again, if there is an action missing you can create it yourself.
+
+\cite{PowerAutomateOverview}
+
+Power Automate was not used for this project because it does not innately offer Document Understanding which is a vital part of this project and the other parts            do not contain enough automation possibilities to justify using an external software.
+
+\section{Digital Application Form}
+\setauthor{Dominik Ortbauer}
+
+Another possibility to achieve the goal of this project would be to digitize the application form. In order to make this happen a web page would need to be created with all the values from the application form.
+
+Security would be very important for this project due to it containing a lot of personal data. Some sort of validation would be needed so that unfinished entries can not be submitted and the same person can not submit an application twice.
+
+The backend of this digital application form would be almost the same as the backend for this project except for the Document Understanding part which would not be necessary. It would only enter the data into the access database with optional validation in between.
+
+This is a good approach to the problem but the paper version of the application form is not going to disappear and therefore an automation of both versions is ideal.
+
+This project aims to automate only the paper version of the application form but there is another diploma thesis which focuses on creating a digital version of the application form.

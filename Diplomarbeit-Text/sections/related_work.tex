@@ -1,0 +1,24 @@
+Citing \cite{InfH} properly.
+
+Kabellose Technologien sind in abgelegenen Gebieten wichtig \cite{APCW2006}.
+
+
+When a new student is applying for the HTBLA Leonding he or she has to fill out the application form and bring to the school office.
+The person in charge of the application process has to enter the data into an access database provided by the system administrator.
+This process is time consuming and tedious especially because there are hundreds of applications every year.
+The goal of this project is to create an application that simplifies the this process for the school office staff
+and since those do usually not have a computer science background the application has to be easy to use and intuitive.
+
+The app has to be able to handle multiple photos of the same application because it consists of multiple pages.
+It also has to contain some validation feature to allow the user to validate the output of the document understanding model
+because we are working with important data that must not be entered incorrectly.
+
+Due to data protection laws the document understanding model has to be deployed on premise in the school network and not store
+any data unneccessarily.
+
+The validated data needs to be entered into the access database provided by the school's system administrator.
+The database contains two important tables for the application.
+A table for the applicant's data and a table for the legal guardian's data.
+Both of those tables contain highly confidential data like a social security number, home address and religion, etc.
+
+After the deadline for the applications the contents of the access database will be written to an excel file which will in turn be importet into \gls{sokrates}.

@@ -1,0 +1,87 @@
+\section{Flutter}
+\setauthor{Dominik Ortbauer}
+
+Flutter is a framework for developing cross platform applications for desktop, or any major mobile OS.
+High performance is achieved in this framework by rendering the UI directly to the canvas instead of passing it through some OS specific framework first.
+Another feature of Flutter is its big collections of widgets which allows the developer to create an app without the need for many custom elements.
+Google developed the programming language Dart for this framework which is a barrier when trying to get into it because you have to learn a new language and all of its features.
+Flutter is a reactive language which means that widgets which contain a state will only be rerendered when that state changes. For example the preview of the last taken picture in the camera app has the last taken picture as a state and when that changes by taking a new picture the preview updates.
+
+\cite{FlutterOverview}
+
+\subsection{Dart}
+\setauthor{Dominik Ortbauer}
+
+Dart is a programming language developed by Google for the creation of user interfaces. The language supports all the things necessary for object oriented programming like classes and interfaces as well as well as concurrency features used for UI development. 
+
+\section{React Native}
+\setauthor{Dominik Ortbauer}
+
+React Native allows for the development of cross platform mobile applications using Javascript/Typescript and the react framework.
+For this project React Native was chosen as the framework for the mobile application due to the authors experience with Typescript as well as its cross platform compatibility which is needed since the school staff does not have an uniform phone operating system.
+Reactive programming is used in this framework the same as in Flutter.
+
+\cite{reactNativeOverview}
+
+\subsection{Expo}
+
+Expo was used as a development environment for its ease of use and quick development cycle.
+It also allows you to use your own mobile phone to test your application without the need for an emulator like Android Studio.
+Especially useful for this project was the easy use of the camera which is neatly provided by the frameworks expo-camera package.
+
+\cite{ExpoOverview}
+
+Building the application with Expo is a bit roundabout however in this case the other pros outweigh this con by a lot.
+
+\section{Communication}
+\setauthor{Dominik Ortbauer}
+
+\subsection{WebSockets}
+\setauthor{Dominik Ortbauer}
+
+The communication between the document understanding model running on a school server and the mobile application is done via WebSockets because the model needs to accept incoming images of the application form and in following return the extracted data for validation.
+Due to this specification, some sort of two-way communication is needed and WebSockets is the best solution for this requirement.
+
+The server where the Document Understanding model is running hosts a WebSocket server which responds to messages of type "processing" and "validation" and then sends the images to the DU model for the first type and enters the validated data into the database for the latter.
+
+\subsection{MQTT}
+\setauthor{Dominik Ortbauer}
+
+MQTT works by employing a broker which everyone communicates with. When publishing a message for example the message gets sent to the broker along with the topic and the broker passes the message on to everyone who subscribed to the topic of the message.
+
+The messages sent by the clients have three different levels of importance called Quality of Service (QoS).
+These levels are:
+
+\begin{itemize}
+    \item QoS 0: The message is sent to the broker only once no matter if it arrives or not.
+    \item QoS 1: The message is received by the broker at least once. This is achieved by sending a message over and over again until the broker responds. This can lead to the broker receiving the message multiple times.
+    \item QoS 2: The message is received exactly once. This QoS ensures that the message arrives only once at the broker but it uses more bandwidth than the other options.
+\end{itemize}
+
+
+\FloatBarrier
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.8]{pics/MQTT_Structure.png}
+    \caption{MQTT Architecture}
+    \label{fig:tech:MQTTStructure}
+\end{figure}
+\FloatBarrier
+
+The first try to handle communication was done using MQTT. The mobile application publishes the taken images to a "pictures" topic. The server subscribes to this topic and when it receives images it processes them using the document understanding model and publishes the results to the "validation" topic which the mobile application subscribes to and due to that receives the data for validation which it presents in the validation screen. Once the data is validated and the finish button is pressed the mobile phone publishes the validated data to the "validated" topic which again the server subscribes to to receive it and then enter it into the database.
+
+\FloatBarrier
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{pics/MQTT_Diagram.png}
+    \caption{Diagram of the MQTT solution for this project}
+    \label{fig:tech:MQTTDiagram}
+\end{figure}
+\FloatBarrier
+
+The problem with this solution was that if there are multiple phones connected at the same time and subscribing to the "validation" topic all of them would get the same data to validate and work would be done redundantly.
+
+Was kann man da alles noch dazu schreiben? Access? Programming language?
+
+Technologien, die ich nicht verwendet habe aber die ich verwenden hätte können. Z.B. Javascript vs. Typescript. Oder Flutter als Alternative und andere Alternativen.
+Alternativen zu Websockets beschreiben und erste Überlegungen(Mqtt oder REST oder SSE).
