@@ -1,27 +1,18 @@
+import { Bewerber } from "./Bewerber"
 import SocketClient from "./SocketClient"
 import { CameraCapturedPicture } from "expo-camera"
 import React, { Dispatch } from "react"
 
 export type globalStateType = {
-    socketClient: SocketClient,
+    socketClient: SocketClient | null,
     pictures: CameraCapturedPicture[],
-    validationData: Map<string, string>,
+    validationData: Bewerber | null,
 }
 
 export const globalState: globalStateType = {
-    socketClient: new SocketClient("10.0.0.29", 5000, (data) => {
-        var map = new Map<string, string>();
-        for(var key in data) {
-            map.set(key, data[key]);
-        }
-        
-    }),
+    socketClient: null,
     pictures: [],
-    validationData: new Map<string, string>([
-        ["Vorname", "Dominik"],
-        ["Nachname", "Ortbauer"],
-        ["Geburtsdatum", "14.02.2005"],
-    ]),
+    validationData: null,
 }
 
 export const globalStateContext = React.createContext(globalState)

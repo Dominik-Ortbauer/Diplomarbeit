@@ -4,9 +4,6 @@ import { Camera, CameraCapturedPicture, CameraType, requestCameraPermissionsAsyn
 import { useIsFocused } from '@react-navigation/native';
 import { globalStateContext, useGlobalState } from './Context';
 import { Socket, io } from 'socket.io-client';
-import SocketClient from './SocketClient';
-
-const photoTopic: string = 'photo';
 
 let socket: Socket;
 
@@ -15,16 +12,6 @@ export const CameraScreen = ({ navigation }: { navigation: any }) => {
   const [hasPermission, setHasPermission] = React.useState<boolean | null>(null);
   const [cameraRef, setCameraRef] = React.useState<Camera | null>(null);
   const isFocused = useIsFocused();
-
-  React.useEffect(() => {
-    dispatch({socketClient: new SocketClient("10.0.0.29", 5000, (data) => {
-      var map = new Map<string, string>();
-      for(var key in data) {
-        map.set(key, data[key]);
-      }
-      dispatch({validationData: map});
-    })});
-  }, []);
 
   React.useEffect(() => {
     (async () => {
@@ -43,11 +30,9 @@ export const CameraScreen = ({ navigation }: { navigation: any }) => {
   };
 
   const sendToProcessing = async () => {
-    
-
-    //console.log('Sending to processing');
-    //console.log(state.socketClient.getHost() + ":" + state.socketClient.getPort());
-    state.socketClient.sendProcessingData(state.pictures);
+    if(state.socketClient !== null) {
+      state.socketClient.sendProcessingData(state.pictures);
+    }
   };
 
   if (hasPermission === null || !isFocused) {

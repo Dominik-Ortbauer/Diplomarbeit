@@ -1,28 +1,48 @@
+import { Bewerber } from "./Bewerber";
 import { CameraCapturedPicture } from "expo-camera";
 
 export default class SocketClient {
     private ws: WebSocket;
     private port: number;
     private host: string;
+    private onMessage: (data: any) => void;
 
     constructor(host: string, port: number, onMessage: (data: any) => void) {
         this.port = port;
         this.host = host;
-        this.ws = new WebSocket(`ws://${host}:${this.port}`);
+        this.onMessage = onMessage;
+        this.ws = this.createWebSocket();
+    }
 
-        this.ws.onerror = (error) => {
+    private createWebSocket(): WebSocket {
+        const ws: WebSocket = new WebSocket(`ws://${this.host}:${this.port}`);
+
+        ws.onerror = (error) => {
             console.log(`WebSocket error: ${error.message}`);
+
+            async function sleep(ms: number) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            (async() => {
+                await sleep(1000);
+                this.ws = this.createWebSocket();
+            })();
+
+            ws.close();
         }
 
-        this.ws.onopen = () => {
+        ws.onopen = () => {
             console.log("Connected to server");
         };
 
-        this.ws.onmessage = (json) => {
+        ws.onmessage = (json) => {
             const data = JSON.parse(json.data);
             console.log(data)
-            onMessage(data);
+            this.onMessage(data);
         };
+
+        return ws;
     }
 
     public getHost(): string {
@@ -70,11 +90,7 @@ export default class SocketClient {
         });
     }
 
-    sendValidatedData(validationData: Map<string, string>) {
-        var jsonObject = {};
-        for(var [key, value] of validationData) {
-            jsonObject[key] = value;
-        }
-        this.ws.send(`{"type": "validation", "data": ${JSON.stringify(jsonObject)}}`);
+    sendValidatedData(validationData:Bewerber) {
+        this.ws.send(`{"type": "validation", "data": ${JSON.stringify(validationData)}}`);
     }
 }

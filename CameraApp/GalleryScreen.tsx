@@ -22,7 +22,7 @@ export const GalleryScreen = ({ navigation }: { navigation: any }) => {
                 state.pictures.length > 0 ? 
                 <ImageBackground resizeMode="contain" style={styles.image} source={state.pictures[index]}></ImageBackground> 
                 :
-                <Text>No Pictures taken</Text>
+                <Text>No pictures taken</Text>
             }
             {
                 index > 0 ? 

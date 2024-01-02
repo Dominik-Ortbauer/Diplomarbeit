@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { globalStateContext, useGlobalState } from './Context';
 import SocketClient from './SocketClient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const SettingsScreen = ({ navigation }: { navigation: any }) => {
   const [state, dispatch] = useGlobalState();
-  const [host, setHost] = useState<string>(state.socketClient.getHost());
-  const [port, setPort] = useState<number>(state.socketClient.getPort());
+  const [host, setHost] = useState<string>(state.socketClient === null ? "" : state.socketClient.getHost());
+  const [port, setPort] = useState<number>(state.socketClient === null ? 5000 : state.socketClient.getPort());
 
   const saveSettings = () => {
+    (async () => {
+      await AsyncStorage.setItem('host', host);
+      await AsyncStorage.setItem('port', port.toString());
+    })();
+
     var newClient = new SocketClient(host, port, (data) => {
       var map = new Map<string, string>();
       for(var key in data) {
@@ -16,7 +23,7 @@ const SettingsScreen = ({ navigation }: { navigation: any }) => {
       }
       dispatch({validationData: map});
     });
-    dispatch({socketClient: newClient})
+    dispatch({socketClient: newClient});
   };
 
   return (
