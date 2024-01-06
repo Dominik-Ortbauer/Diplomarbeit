@@ -7,7 +7,7 @@ import { Socket, io } from 'socket.io-client';
 
 let socket: Socket;
 
-export const CameraScreen = ({ navigation }: { navigation: any }) => {
+export default function CameraScreen({ navigation }: { navigation: any }) {
   const [state, dispatch] = useGlobalState();
   const [hasPermission, setHasPermission] = React.useState<boolean | null>(null);
   const [cameraRef, setCameraRef] = React.useState<Camera | null>(null);

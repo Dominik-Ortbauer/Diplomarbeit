@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { CameraScreen } from './CameraScreen';
+import CameraScreen from './CameraScreen';
 import SettingsScreen from './SettingsScreen';
 import { MaterialIcons } from '@expo/vector-icons';
 import { GalleryScreen } from './GalleryScreen';
-import { GlobalStateProvider, globalState, globalStateContext, useGlobalState } from './Context';
+import { GlobalStateProvider } from './Context';
 import { ValidationScreen } from './ValidationScreen';
 import SocketClientInitializer from './SocketClientInitializer';
 

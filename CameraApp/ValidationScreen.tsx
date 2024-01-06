@@ -10,12 +10,11 @@ import {
 import { useGlobalState } from "./Context";
 import React, { useState } from "react";
 import { CheckBox } from "react-native-elements";
-import Collapsible from "react-native-collapsible";
 import { Bewerber } from "./Bewerber";
 
-const [state, dispatch] = useGlobalState();
-
 export const ValidationScreen = ({ navigation }: { navigation: any }) => {
+  const [state, dispatch] = useGlobalState();
+
   const [studentData, setStudentData] = useState({
     nachname: state.validationData?.nachname,
     vornamen: state.validationData?.vornamen,

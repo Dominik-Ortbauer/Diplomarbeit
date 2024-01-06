@@ -32,6 +32,7 @@ export function GlobalStateProvider({ children }: { children: React.ReactNode}) 
     )
 }
 
+
 export function useGlobalState(): [globalStateType, Dispatch<any>] {
     return [
         React.useContext(globalStateContext),
