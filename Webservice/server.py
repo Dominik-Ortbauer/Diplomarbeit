@@ -19,8 +19,10 @@ async def echo(websocket, path):
         data = json.loads(message)
         if(data['type'] == 'processing'):
             # write first image to file which is base 64 encoded
-            with open('image.jpg', 'wb') as file:
-                file.write(base64.b64decode(data['data'][0]))
+
+            for i in range(len(data['data'])):
+                with open(f'DocumentUnderstanding/data/image{i}.jpg', 'wb') as file:
+                    file.write(base64.b64decode(data['data'][i]))
 
             print('sending validation data')
             example_data.pack_guardians()
